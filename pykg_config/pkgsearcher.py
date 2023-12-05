@@ -38,7 +38,7 @@ __version__ = "$Revision: $"
 
 from os import getenv, listdir
 from os.path import isdir, isfile, join, split, splitext
-import sys
+import sys, platform
 if sys.platform == 'win32':
     if sys.version_info[0] < 3:
         import _winreg
@@ -102,17 +102,18 @@ class NotAPCFileError(BadPathError):
     pass
 
 class TargetTriple:
-    __slots__ = ("arch", "bitness", "os", "abi")
+    __slots__ = ("arch", "bitness", "os", "abi", "triples")
 
     def __init__(self, arch = None, os = None, abi = None, bitness = None) -> None:
-        pythonTripl = sys.implementation._multiarch.split("-")
-        self.arch = arch if arch is not None else pythonTripl[0]
-        self.os = os if os is not None else pythonTripl[1]
-        self.abi = abi if abi is not None else pythonTripl[2]
+        pythonTripl = getattr(sys.implementation, '_multiarch', '--').split("-")
+        self.arch = arch or pythonTripl[0] or  platform.machine()
+        self.os = os or pythonTripl[1] or platform.system()
+        self.abi = abi or pythonTripl[2] or sys.platform
+        self.triples = [v for v in [self.arch, self.os, self.abi] if v]
         self.bitness = bitness
 
     def __str__(self) -> str:
-        return "-".join((self.arch, self.os, self.abi))
+        return "-".join(self.triples)
 
 thisArchTriple = TargetTriple()
 
