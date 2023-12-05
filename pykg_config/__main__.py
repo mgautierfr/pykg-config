@@ -45,6 +45,7 @@ from .options import Options
 from .version import Version
 from .pkgsearcher import PackageNotFoundError, NoOpenableFilesError
 from .substitute import UndefinedVarError
+from .envVars2VarsRemap import look_up_var_in_env
 
 PYKG_CONFIG_VERSION = '1.1.0'
 CORRESPONDING_VERSION = '0.26'
