@@ -227,12 +227,14 @@ class PkgSearcher:
     def _init_search_dirs(self):
         # Append dirs in PKG_CONFIG_PATH
         if "config_path" in self.globals and self.globals["config_path"]:
+            print(self.globals["config_path"])
             for d in self.globals["config_path"]:
                 if not d or not isdir(d):
                     continue
                 self._append_packages(d)
         # Append dirs in PKG_CONFIG_LIBDIR
         if "config_libdir" in self.globals and self.globals["config_libdir"]:
+            print(self.globals["config_libdir"])
             for d in self.globals["config_libdir"]:
                 if not d or not isdir(d):
                     continue
@@ -265,6 +267,7 @@ class PkgSearcher:
         else:
             prefix = sys.prefix
         if pc_path:
+            print(pc_path)
             for d in pc_path.split(self._split_char()):
                 if d and isdir(d):
                     self._append_packages(d)

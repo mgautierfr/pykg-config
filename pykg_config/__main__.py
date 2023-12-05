@@ -209,6 +209,7 @@ def main():
         r = look_up_var_in_env(var_name)
         if r:
             global_variables[var_name] = postprocessor(r)
+    print(global_variables)
 
     if getenv('PKG_CONFIG_DISABLE_UNINSTALLED'):
         Options().set_option('prefer_uninstalled', False)

@@ -53,8 +53,8 @@ class ErrorPrinter(object):
         self.vars[var] = value
 
     def debug_print(self, line, args=None):
-        if not Options().get_option('debug'):
-            return
+        #if not Options().get_option('debug'):
+        #    return
         if hasattr(self, 'vars'):
             for var in self.vars:
                 line = line.replace('%(' + var + ')', self.vars[var])
